@@ -21,4 +21,10 @@
         android:title="@string/settings"
         app:showAsAction="ifRoom" />
 
+<!--    CHANGES-->
+    <item
+        android:id="@+id/btn_set_password"
+        android:title="@string/set_password"
+        app:showAsAction="never" />
+
 </menu>

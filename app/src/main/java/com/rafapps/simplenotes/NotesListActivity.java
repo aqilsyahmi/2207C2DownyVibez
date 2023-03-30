@@ -14,13 +14,17 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -172,7 +176,11 @@ public class NotesListActivity extends AppCompatActivity implements SearchView.O
         if (id == R.id.btn_search) {
             return (true);
         }
-
+        // CHANGES. Add this block to handle the "Set Password" menu item
+        if (id == R.id.btn_set_password) {
+            setPassword();
+            return (true);
+        }
         return (super.onOptionsItemSelected(item));
     }
 
@@ -295,4 +303,41 @@ public class NotesListActivity extends AppCompatActivity implements SearchView.O
         startActivity(NoteActivity.getStartIntent(NotesListActivity.this, ""));
     }
 
+    //CHANGES
+    private void setPassword() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.set_password));
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String password = input.getText().toString();
+                savePassword(password);
+                Toast.makeText(NotesListActivity.this, getString(R.string.password_set_successfully), Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void savePassword(String password) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("password", password);
+        editor.putBoolean("password_set", true); // add this line to set password_set to true
+        editor.apply();
+        Log.d("SavePassword", "password_set: " + preferences.getBoolean("password_set", false));
+    }
+
 }
+
+

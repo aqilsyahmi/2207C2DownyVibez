@@ -12,6 +12,24 @@
         android:theme="@style/AppTheme">
 
         <activity
+            android:name=".EntryPointActivity"
+            android:theme="@style/SplashTheme"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".SetPasswordActivity" />
+
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/login_activity_title">
+        </activity>
+
+
+        <activity
             android:name=".NoteActivity"
             android:exported="true"
             android:parentActivityName=".NotesListActivity">
@@ -29,7 +47,6 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
