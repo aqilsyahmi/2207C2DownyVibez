@@ -13,6 +13,7 @@
 
         <activity
             android:name=".EntryPointActivity"
+            android:excludeFromRecents="true"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>

@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import androidx.annotation.ColorInt;
@@ -46,6 +47,8 @@ public class NoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_note);
         titleText = findViewById(R.id.et_title);
         noteText = findViewById(R.id.et_note);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
 
         Intent intent = getIntent();
         String action = intent.getAction();

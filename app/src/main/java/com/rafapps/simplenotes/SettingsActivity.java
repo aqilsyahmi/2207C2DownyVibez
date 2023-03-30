@@ -15,6 +15,7 @@ import androidx.core.graphics.ColorUtils;
 import androidx.core.widget.CompoundButtonCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,6 +39,8 @@ public class SettingsActivity extends AppCompatActivity implements colorDialog.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+
 
         preferences = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
         imageAccent = findViewById(R.id.image_accent);
