@@ -1,5 +1,5 @@
 package com.rafapps.simplenotes;
-
+import com.rafapps.simplenotes.EncryptionUtils;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,8 +35,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String enteredPassword = passwordEditText.getText().toString();
+                String decryptedEnteredPassword = EncryptionUtils.decrypt(enteredPassword);
+                String decryptedStoredPassword = EncryptionUtils.decrypt(password);
 
-                if (enteredPassword.equals(password)) {
+
+                if (decryptedEnteredPassword.equals(decryptedStoredPassword)) {
                     Intent intent = new Intent(LoginActivity.this, NotesListActivity.class);
                     startActivity(intent);
                     finish();

@@ -1,5 +1,5 @@
 package com.rafapps.simplenotes;
-
+import com.rafapps.simplenotes.EncryptionUtils;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,7 +25,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -45,7 +44,7 @@ public class NotesListActivity extends AppCompatActivity implements SearchView.O
 
     public static String PREFERENCE_SORT_ALPHABETICAL = "sortAlphabetical";
 
-    private boolean colourNavbar, sortAlphabetical;
+    private boolean colourNavbar, sortAlphabetical, passwordSet;
     private TextView emptyText;
     private NotesListAdapter notesListAdapter;
     private FloatingActionButton fab;
@@ -104,6 +103,12 @@ public class NotesListActivity extends AppCompatActivity implements SearchView.O
 
         setItemTouchHelper(recyclerView);
         applySettings();
+    }
+    // Check if password is set
+        passwordSet = preferences.getBoolean(SettingsActivity.PREFERENCE_PASSWORD_SET, false);
+        if (passwordSet) {
+            showPasswordDialog();
+        }
     }
 
     @Override
@@ -311,16 +316,15 @@ public class NotesListActivity extends AppCompatActivity implements SearchView.O
     private void setPassword() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.set_password));
-
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         builder.setView(input);
-
         builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String password = input.getText().toString();
-                savePassword(password);
+                String encryptPassword = EncryptionUtils.encrypt(password); //encrypt Password
+                savePassword(encryptPassword);
                 Toast.makeText(NotesListActivity.this, getString(R.string.password_set_successfully), Toast.LENGTH_SHORT).show();
             }
         });
@@ -343,5 +347,8 @@ public class NotesListActivity extends AppCompatActivity implements SearchView.O
     }
 
 }
+
+
+
 
 
