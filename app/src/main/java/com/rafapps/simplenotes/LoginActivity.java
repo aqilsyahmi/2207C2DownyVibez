@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 if (decryptedStoredPassword != null && enteredPassword.equals(decryptedStoredPassword)) {
+                    Log.d("DecryptSuccess", "Decrypt success! ");
                     Intent intent = new Intent(LoginActivity.this, NotesListActivity.class);
                     startActivity(intent);
                     finish();
