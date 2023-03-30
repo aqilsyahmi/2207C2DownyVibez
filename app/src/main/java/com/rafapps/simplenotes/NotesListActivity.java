@@ -60,6 +60,8 @@ public class NotesListActivity extends AppCompatActivity implements SearchView.O
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes_list);
+
+        //Screenshot disable
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
 

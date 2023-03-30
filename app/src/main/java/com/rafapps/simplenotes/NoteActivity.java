@@ -47,6 +47,7 @@ public class NoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_note);
         titleText = findViewById(R.id.et_title);
         noteText = findViewById(R.id.et_note);
+        //Disable Screenshot
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
 

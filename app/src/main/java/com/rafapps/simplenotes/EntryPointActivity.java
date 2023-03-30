@@ -17,6 +17,8 @@ public class EntryPointActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_entry_point);
         super.onCreate(savedInstanceState);
+
+        //Disable Screenshot
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
 

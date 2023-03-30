@@ -22,8 +22,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SetPasswordActivity" />
-
         <activity
             android:name=".LoginActivity"
             android:label="@string/login_activity_title">
