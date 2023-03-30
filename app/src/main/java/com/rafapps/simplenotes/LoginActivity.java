@@ -1,14 +1,16 @@
 package com.rafapps.simplenotes;
-import com.rafapps.simplenotes.EncryptionUtils;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -21,9 +23,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Disable Screenshot
+        // Disable Screenshot
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         password = preferences.getString("password", "");
@@ -35,20 +36,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String enteredPassword = passwordEditText.getText().toString();
-                String decryptedEnteredPassword = null;
-                try {
-                    decryptedEnteredPassword = EncryptionUtils.decrypt(enteredPassword);
-                } catch (Exception e) {
-                }
                 String decryptedStoredPassword = null;
-                try {
-                    decryptedStoredPassword = EncryptionUtils.decrypt(password);
-                } catch (Exception e) {
 
+                try {
+                    if (!password.isEmpty()) {
+                        decryptedStoredPassword = EncryptionUtils.decrypt(password);
+                    }
+                } catch (Exception e) {
+                    Log.e("Encryption Error", "Error decrypting password: " + e.getMessage());
                 }
 
-
-                if (decryptedEnteredPassword.equals(decryptedStoredPassword)) {
+                if (decryptedStoredPassword != null && enteredPassword.equals(decryptedStoredPassword)) {
                     Intent intent = new Intent(LoginActivity.this, NotesListActivity.class);
                     startActivity(intent);
                     finish();
@@ -60,5 +58,3 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 }
-
-

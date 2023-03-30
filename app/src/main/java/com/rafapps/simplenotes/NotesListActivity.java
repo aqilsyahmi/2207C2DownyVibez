@@ -319,10 +319,13 @@ public class NotesListActivity extends AppCompatActivity implements SearchView.O
                 String encryptPassword = null;
                 try {
                     encryptPassword = EncryptionUtils.encrypt(password);//encrypt Password
+                    Log.d("encryptedpassword", "encryptPassword: " + encryptPassword);
                 } catch (Exception e) {
-
+                    Log.e("Encryption Error", "Error encrypting password: " + e.getMessage());
+                    return;
                 }
                 savePassword(encryptPassword);
+                Log.d("savePassword", "SavedPassword: " + encryptPassword);
                 Toast.makeText(NotesListActivity.this, getString(R.string.password_set_successfully), Toast.LENGTH_SHORT).show();
             }
         });
