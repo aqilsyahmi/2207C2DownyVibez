@@ -35,8 +35,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String enteredPassword = passwordEditText.getText().toString();
-                String decryptedEnteredPassword = EncryptionUtils.decrypt(enteredPassword);
-                String decryptedStoredPassword = EncryptionUtils.decrypt(password);
+                String decryptedEnteredPassword = null;
+                try {
+                    decryptedEnteredPassword = EncryptionUtils.decrypt(enteredPassword);
+                } catch (Exception e) {
+                }
+                String decryptedStoredPassword = null;
+                try {
+                    decryptedStoredPassword = EncryptionUtils.decrypt(password);
+                } catch (Exception e) {
+
+                }
 
 
                 if (decryptedEnteredPassword.equals(decryptedStoredPassword)) {

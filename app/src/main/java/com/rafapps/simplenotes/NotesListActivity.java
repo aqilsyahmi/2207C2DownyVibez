@@ -104,13 +104,6 @@ public class NotesListActivity extends AppCompatActivity implements SearchView.O
         setItemTouchHelper(recyclerView);
         applySettings();
     }
-    // Check if password is set
-        passwordSet = preferences.getBoolean(SettingsActivity.PREFERENCE_PASSWORD_SET, false);
-        if (passwordSet) {
-            showPasswordDialog();
-        }
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -323,7 +316,12 @@ public class NotesListActivity extends AppCompatActivity implements SearchView.O
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String password = input.getText().toString();
-                String encryptPassword = EncryptionUtils.encrypt(password); //encrypt Password
+                String encryptPassword = null;
+                try {
+                    encryptPassword = EncryptionUtils.encrypt(password);//encrypt Password
+                } catch (Exception e) {
+
+                }
                 savePassword(encryptPassword);
                 Toast.makeText(NotesListActivity.this, getString(R.string.password_set_successfully), Toast.LENGTH_SHORT).show();
             }
@@ -345,7 +343,6 @@ public class NotesListActivity extends AppCompatActivity implements SearchView.O
         editor.apply();
         Log.d("SavePassword", "password_set: " + preferences.getBoolean("password_set", false));
     }
-
 }
 
 
